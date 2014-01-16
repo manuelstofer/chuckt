@@ -30,6 +30,12 @@ describe('chuckt.ChuckT', function(){
 
     active = chucktjs.chucktify(sockA);
     passive = chucktjs.chucktify(sockB);
+
+    passive.on('echo', function() {
+      var args = Array.prototype.slice.call(arguments, 0);
+      var callback = args.pop();
+      callback.apply(null, args);
+    });
   });
 
 
@@ -43,5 +49,21 @@ describe('chuckt.ChuckT', function(){
     });
 
     active.emit('receive', 'hello', 'data');
+  });
+
+  it('should support callbacks', function(done){
+
+    active.emit('echo', 'hello', function (hello) {
+      expect(arguments.length).toEqual(1);
+      expect(hello).toEqual('hello');
+      done();
+    });
+  });
+
+  it('should support callbacks without arguments', function(done){
+    active.emit('echo', function (hello) {
+      expect(arguments.length).toEqual(0);
+      done();
+    });
   });
 });
