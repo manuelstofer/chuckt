@@ -61,6 +61,7 @@ describe('chuckt.ChuckT', function(){
   });
 
   it('should support callbacks without arguments', function(done){
+
     active.emit('echo', function (hello) {
       expect(arguments.length).toEqual(0);
       done();

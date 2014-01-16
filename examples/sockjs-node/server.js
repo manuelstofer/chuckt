@@ -3,12 +3,12 @@ var sockjs = require('sockjs');
 var chucktjs = require('../../lib/chuckt');
 
 var echo = sockjs.createServer();
+
 echo.on('connection', function(conn) {
 
   var chuckt = chucktjs.chucktifySockJSNode(conn);
 
   chuckt.on('echo', function() {
-    console.log('echo');
     var args = Array.prototype.slice.call(arguments, 0);
     var callback = args.pop();
     callback.apply(null, args);
