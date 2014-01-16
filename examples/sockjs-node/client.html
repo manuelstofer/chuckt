@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+    <script src="../../lib/chuckt.js"></script>
+    <script>
+        var sock = new SockJS('http://localhost:9999/echo');
+        sock.onopen = function() {
+            var chuckt = epixa.chucktify(sock);
+
+            chuckt.emit('echo', 'hello', function(data) {
+                console.log({ echo: data });
+            });
+
+            chuckt.on('hello', function (message, fn) {
+                console.log(message);
+                fn('hello server');
+            });
+        };
+    </script>
+</head>
+<body>
+
+</body>
+</html>
