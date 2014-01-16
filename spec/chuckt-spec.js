@@ -17,7 +17,7 @@ function SocketMock() {
   };
 }
 
-describe('chuckt.ChuckT', function(){
+describe('chuckt.ChuckT', function() {
 
   var active;
   var passive;
@@ -39,7 +39,7 @@ describe('chuckt.ChuckT', function(){
   });
 
 
-  it('should receive events and data', function(done){
+  it('should receive events and data', function(done) {
 
     passive.on('receive', function(hello, data) {
       expect(arguments.length).toEqual(2);
@@ -51,20 +51,32 @@ describe('chuckt.ChuckT', function(){
     active.emit('receive', 'hello', 'data');
   });
 
-  it('should support callbacks', function(done){
+  it('should support callbacks', function(done) {
 
-    active.emit('echo', 'hello', function (hello) {
+    active.emit('echo', 'hello', function(hello) {
       expect(arguments.length).toEqual(1);
       expect(hello).toEqual('hello');
       done();
     });
   });
 
-  it('should support callbacks without arguments', function(done){
+  it('should support callbacks without arguments', function(done) {
 
-    active.emit('echo', function (hello) {
+    active.emit('echo', function(hello) {
       expect(arguments.length).toEqual(0);
       done();
     });
+  });
+
+  it('should call listeners registered with any for any event', function(done) {
+
+    passive.any(function(event, arg) {
+      expect(event).toEqual('event-name');
+      expect(arg).toEqual('arg');
+      expect(arguments.length).toEqual(2);
+      done();
+    });
+
+    active.emit('event-name', 'arg');
   });
 });
