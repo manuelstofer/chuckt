@@ -1,0 +1,14 @@
+{
+  "name": "chuckt",
+  "author" : "Court Ewing",
+  "repo": "epixa/chuckt",
+  "description": "ChuckT is an event transport system built on the SockJS websocket API.",
+  "version": "0.0.0-testonly",
+  "keywords": [],
+  "dependencies": {},
+  "development": {},
+  "main": "lib/chuckt.js",
+  "scripts": [
+    "lib/chuckt.js"
+  ]
+}
